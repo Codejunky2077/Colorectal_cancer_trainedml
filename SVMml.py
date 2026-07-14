@@ -1,5 +1,5 @@
 import pandas as pd 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 #loading preprocessed dataset
 crc=pd.read_csv("Gut_Microbiome_CRC_Dataset.csv")
 
@@ -14,16 +14,19 @@ y=crc["Disease_status"]
 
 #to train and test the model we need to split the dataset into training and testing sets
 from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=41,stratify=y)
-#creating empty random forest model
-rf=RandomForestClassifier(n_estimators=100,random_state=41)
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=20,stratify=y)
+#creating empty SVM model
+svm_model = SVC(
+    kernel="rbf",
+    random_state=42
+)
 #training the ml model
-rf.fit(x_train,y_train)
+svm_model.fit(x_train,y_train)
 
 
 
 #to check predictions
-y_pred=rf.predict(x_test)
+y_pred=svm_model.predict(x_test)
 print("Predictions:",y_pred[:10])
 print("Actual values:",y_test[:10])
 
@@ -43,16 +46,3 @@ print(confuse)
 from sklearn.metrics import classification_report
 print(classification_report(y_test, y_pred))
 
-#to check important biomarkers we can use feature importance of the model
-importance = pd.DataFrame({
-    "Microbial_Species": x.columns,
-    "Importance": rf.feature_importances_
-})
-
-importance = importance.sort_values(
-    by="Importance",
-    ascending=False
-)
-
-print("\nTop 10 Important Microbial Species")
-print(importance.head(10))

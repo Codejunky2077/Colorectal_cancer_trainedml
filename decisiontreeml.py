@@ -50,3 +50,17 @@ print(confuse)
 #classification report to check the performance of the model
 from sklearn.metrics import classification_report
 print(classification_report(y_test, y_pred))
+
+#to check important biomarkers we can use feature importance of the model
+importance = pd.DataFrame({
+    "Microbial_Species": x.columns,
+    "Importance": crc_model.feature_importances_
+})
+
+importance = importance.sort_values(
+    by="Importance",
+    ascending=False
+)
+
+print("\nTop 10 Important Microbial Species")
+print(importance.head(10))
