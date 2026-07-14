@@ -1,6 +1,6 @@
 #using pandas to get info about datatype of file 
 import pandas as pd
-sample_file="CRC_ml/Gut_Microbiome_CRC_Dataset.csv"
+sample_file=("Gut_Microbiome_CRC_Dataset.csv")
 crc=pd.read_csv(sample_file)
 print(crc.info())
 

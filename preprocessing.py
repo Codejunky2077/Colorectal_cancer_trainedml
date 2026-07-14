@@ -30,7 +30,7 @@ dataset.reset_index(inplace=True)
 dataset.rename(columns={"index": "Sample_ID"}, inplace=True)
 #print(dataset)
 
-
+#filling null values with 0 to avoid errors in machine learning models and checking again
 dataset = dataset.fillna(0)
 print("Remaining missing values:",
       dataset.isna().sum().sum())
