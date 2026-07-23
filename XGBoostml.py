@@ -70,4 +70,11 @@ def xgb():
 
     print("\nTop 10 Important Microbial Species")
     print(importance.head(10))
+    
+    #plotting roc-auc curve to check the performance of the model
+    from sklearn.metrics import roc_curve, auc
+    global y_prob_xgb, fpr_xgb, tpr_xgb, auc_xgb
+    y_prob_xgb = xgb_model.predict_proba(x_test)[:,1]
+    fpr_xgb, tpr_xgb, _ = roc_curve(y_test, y_prob_xgb)
+    auc_xgb = auc(fpr_xgb, tpr_xgb)
 xgb()

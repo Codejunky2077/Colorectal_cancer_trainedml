@@ -19,6 +19,7 @@ def svm():
     #creating empty SVM model
     svm_model = SVC(
     kernel="rbf",
+    probability=True,
     random_state=42
     )
     #training the ml model
@@ -44,4 +45,13 @@ def svm():
     #classification report to check the performance of the model
     from sklearn.metrics import classification_report
     print(classification_report(y_test, y_pred))
+     
+
+    #plotting auc-roc curve to check the performance of the model
+    from sklearn.metrics import roc_curve, auc
+    global y_prob_svm, fpr_svm, tpr_svm, auc_svm
+    SVC(probability=True)
+    y_prob_svm = svm_model.predict_proba(x_test)[:,1]
+    fpr_svm, tpr_svm, _ = roc_curve(y_test, y_prob_svm)
+    auc_svm = auc(fpr_svm, tpr_svm)
 svm()

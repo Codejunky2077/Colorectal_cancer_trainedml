@@ -12,7 +12,8 @@ def decisiontree():
     #splitting the dataset into two 
     x=crc.drop(columns=["Sample_ID","Disease_status"])
     y=crc["Disease_status"]
-
+    
+    global x_test, y_test, crc_model
     #using train_test_split to split the dataset into train and 20% of data to be used as test data
     from sklearn.model_selection import train_test_split
     x_train,x_test,y_train,y_test=train_test_split(
@@ -64,4 +65,12 @@ def decisiontree():
 
     print("\nTop 10 Important Microbial Species")
     print(importance.head(10))
+    
+    #plotting roc-auc curve to check the performance of the model
+    from sklearn.metrics import roc_curve, auc
+    #decision tree model
+    global y_prob_dt, fpr_dt, tpr_dt, auc_dt
+    y_prob_dt = crc_model.predict_proba(x_test)[:,1]
+    fpr_dt, tpr_dt, _ = roc_curve(y_test, y_prob_dt)
+    auc_dt = auc(fpr_dt, tpr_dt)
 decisiontree()

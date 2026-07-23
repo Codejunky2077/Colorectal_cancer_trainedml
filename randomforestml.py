@@ -63,7 +63,7 @@ def random_forest_model():
     
     #plotting AUC-ROC curve to check the performance of the model
     from sklearn.metrics import roc_curve, auc
-    import matplotlib.pyplot as plt
+    global y_prob_rf, fpr_rf, tpr_rf, auc_rf
     y_prob_rf = rf.predict_proba(x_test)[:,1]
     fpr_rf, tpr_rf, _ = roc_curve(y_test, y_prob_rf)
     auc_rf = auc(fpr_rf, tpr_rf)
